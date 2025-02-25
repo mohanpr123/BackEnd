@@ -1,4 +1,4 @@
 package com.example.Authentication.dto;
 
-public record ResetResponse() {
+public record ResetResponse(String msg) {
 }

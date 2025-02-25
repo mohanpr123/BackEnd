@@ -1,5 +1,6 @@
 package com.example.Authentication.services;
 
+import com.example.Authentication.dto.ResetPasswordRequest;
 import com.example.Authentication.dto.SignupRequest;
 import com.example.Authentication.entity.User;
 import com.example.Authentication.repository.UserRepository;
@@ -7,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -36,6 +39,16 @@ public class AuthServiceImpl implements AuthService {
         User created = userRepository.save(user);
         user.setId(created.getId());
 
+        return user;
+    }
+
+    @Override
+    public Optional<User> updatePassword(ResetPasswordRequest request) {
+        Optional<User> user= userRepository.findByEmail(request.getEmail());
+
+        user.ifPresent(value -> {value.setPassword(passwordEncoder.encode(request.getPassword()));
+            userRepository.save(value);
+        });
         return user;
     }
 }

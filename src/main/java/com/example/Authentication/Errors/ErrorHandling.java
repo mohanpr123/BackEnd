@@ -1,4 +1,4 @@
-package com.example.Authentication;
+package com.example.Authentication.Errors;
 
 public class ErrorHandling {
 }
