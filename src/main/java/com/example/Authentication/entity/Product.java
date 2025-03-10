@@ -2,6 +2,8 @@ package com.example.Authentication.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Product {
 
@@ -9,16 +11,23 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String name;
+    @Column
     private double price;
+    @Column
     private int quantity;
+    @Column
     private String supplier;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    //  Constructor with parameters
+    @Column
+    private boolean deleted = false;
+
+
     public Product(String name, double price, int quantity, User user,String supplier) {
         this.name = name;
         this.price = price;
@@ -27,7 +36,6 @@ public class Product {
         this.supplier=supplier;
     }
 
-    //Default constructor (required by JPA)
     public Product() {
     }
 
@@ -78,5 +86,13 @@ public class Product {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

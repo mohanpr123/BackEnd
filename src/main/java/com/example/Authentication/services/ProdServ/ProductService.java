@@ -1,16 +1,15 @@
 package com.example.Authentication.services.ProdServ;
 
-import com.example.Authentication.dto.ProductDTO;
+import com.example.Authentication.dto.ProductRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public interface ProductService {
-    ProductDTO createProduct(String token, ProductDTO productDTO);
-    Page<ProductDTO> getAllProducts(String token, int page, int size);
-    ProductDTO getProductById(String token, Long productId);
-    ProductDTO updateProduct(String token, Long id, ProductDTO productDTO);
+    ProductRequest createProduct(String token, ProductRequest productRequest);
+    Page<ProductRequest> getAllProducts(String token, int page, int size, String sortBy, String direction);
+    ProductRequest updateProduct(String token, Long id, ProductRequest productRequest);
     void deleteProduct(String token, Long id);
+    Page<ProductRequest> searchProducts(String token, String keyword, int page, int size, String sortBy, String direction);
+
 }
