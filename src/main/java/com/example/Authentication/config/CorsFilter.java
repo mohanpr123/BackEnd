@@ -9,13 +9,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.LogRecord;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CorlFilter implements Filter {
+public class CorsFilter implements Filter {
 
     @Value("${app.client.url}")
     private String ClientUrl="";
@@ -27,7 +24,6 @@ public class CorlFilter implements Filter {
         HttpServletRequest request=(HttpServletRequest) req;
         HttpServletResponse response=(HttpServletResponse) res;
         String Origin = request.getHeader("Origin");
-        Map<String,String> map =new HashMap<>();
         response.setHeader("Access-Control-Allow-Origin",Origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
@@ -41,8 +37,4 @@ public class CorlFilter implements Filter {
             chain.doFilter(req,res);
         }
     }
-
-
-
-
 }

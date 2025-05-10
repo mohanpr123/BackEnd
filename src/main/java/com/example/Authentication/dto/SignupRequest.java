@@ -1,9 +1,5 @@
 package com.example.Authentication.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import org.springframework.stereotype.Component;
-
-
 public class SignupRequest {
 
     private String username;

@@ -1,7 +1,6 @@
 package com.example.Authentication.dto;
 
-public class LoginRequest {
-
+public class ResetPasswordRequest {
 
     private String email;
     private String password;
