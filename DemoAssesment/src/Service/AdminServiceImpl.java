@@ -11,13 +11,13 @@ public class AdminServiceImpl implements AdminService {
 
 	Scanner s = new Scanner(System.in);
 
-	private String adminUsername = "admin";
+	private  String adminUsername = "admin";
 	private String adminPassword = "admin";
 	private String[] roles = { "Manager", "Supervisor", "Technician", "Intern" };
-	private Map<Integer, Employee> employees = new HashMap<>();
-	private List<Employee> list=new  ArrayList<>();
+	private static  Map<Integer, Employee> employees = new HashMap<>();
+	private  static List<Employee> list=new  ArrayList<>();
 	
-	public Map<Integer, Employee> getEmployees() {
+	public  static Map<Integer, Employee> getEmployees() {
 		return employees;
 	}
 
@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
 		return adminPassword;
 	}
 
-	public List<Employee> getList() {
+	public static List<Employee> getList() {
 		return list;
 	}
 
@@ -79,14 +79,30 @@ public class AdminServiceImpl implements AdminService {
 			double salary = s.nextDouble();
 			System.out.print("\nEXPERIENCE: ");
 			int exp = s.nextInt();
-			System.out.println("Assign lead");
-			String lead=""; 
+			System.out.println("ASSIGN LEAD NAME: ");
+			String lead="No lead available";
 			if(!role.equals(roles[0])) {
+				for(Employee emp:list){
+					if(list.isEmpty())
+						System.out.println("No employee avbl to assign lead");
+					if(emp.getRole().equals("Manager"))
+						System.out.println(emp);
+				}
 				lead=s.next();
 			}
 			else {
 				System.out.println("No lead for manager");
 			}
+			if(!role.equals(roles[0]) && !role.equals(roles[1])) {
+				for(Employee emp:list){
+					if(list.isEmpty())
+						System.out.println("No employee avbl to assign lead");
+					if(emp.getRole().equals("Supervisor"))
+						System.out.println(emp);
+				}
+				lead=s.next();
+			}
+
 			employees.put(id, new Employee(id, name, gender, new Address(ad1, ad2, city, state), salary, exp,role,lead,new User(id, uName, pass)));
 			list.add(employees.get(id));
 					

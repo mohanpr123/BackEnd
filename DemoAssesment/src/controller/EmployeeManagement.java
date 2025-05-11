@@ -4,7 +4,6 @@ import java.util.*;
 
 import Service.AdminServiceImpl;
 import Service.NonAdminServiceImpl;
-import entity.*;
 
 public class EmployeeManagement {
 
@@ -15,45 +14,38 @@ public class EmployeeManagement {
 		Scanner s = new Scanner(System.in);
 
 		int choice=0;
-		do {
+		do{
 			System.out.println("LOGIN ADMIN/NON-ADMIN");
-			String username = s.nextLine();
-			String password = s.nextLine();
-			
-			if (username.equals(adminServiceImpl.getAdminUsername())
-					&& password.equals(adminServiceImpl.getAdminPassword())) {
-				while(choice!=3) {
+			String username=s.nextLine();
+			String password=s.nextLine();
+
+			if(adminServiceImpl.getAdminUsername().equals(username) && adminServiceImpl.getAdminPassword().equals(password)){
 				System.out.println("--- ADMIN ACCESS ALLOWED ---");
-				System.out.println("1. VIEW ALL RECORDS\n2. ADD EMPLOYEE\n3. SET ROLE AND LEAD\n4.LOGOUT");
-				choice = s.nextInt();
-				if (choice == 1)
-					adminServiceImpl.viewAllRecords();
-				if (choice == 2)
-					adminServiceImpl.addEmployee();
-				if (choice == 4)
-					break;
+				int pick;
+				do{
+					System.out.println("1. VIEW ALL RECORDS\n2. ADD EMPLOYEE\n3. SET ROLE AND LEAD\n4. LOGOUT");
+					pick=s.nextInt();
+					if(pick == 1) adminServiceImpl.viewAllRecords();
+					if(pick == 2) adminServiceImpl.addEmployee();
+					if(pick == 3) adminServiceImpl.setRole_lead();
+
+				}while(pick!=4);
+			}else{
+				int id=Integer.parseInt(username);
+				if(AdminServiceImpl.getEmployees().get(id).getUser().getId() == id && password.contains(AdminServiceImpl.getEmployees().get(id).getUser().getUserPassword())){
+					System.out.println("--- EMPLOYEE ACCESS ALLOWED ---");
+					int pick;
+					do{
+						System.out.println("1. VIEW ALL EMPLOYEES\n0. EXIT");
+						pick=s.nextInt();
+						if(pick == 1) nonAdminServiceImpl.viewProfile(id);
+					}while(pick != 0);
 				}
 			}
-			
-			int id = Integer.valueOf(username);
-			if (id == adminServiceImpl.getEmployees().get(id).getUser().getId()
-					&& password.contains(adminServiceImpl.getEmployees().get(id).getUser().getUserPassword())) {
-
-				System.out.println("--- EMPLOYEE ACCESS ALLOWED ---");
-				while (true) {
-					choice = s.nextInt();
-					System.out.println("1. VIEW ALL RECORDS UNDER YOU");
-
-					if (choice == 1)
-						nonAdminServiceImpl.viewProfile(id);
-					System.out.println("Press '1' to Coninute or '0' to exit");
-					choice=s.nextInt();
-					if(choice==0)break;
-				}
-
-			} else {
-				System.err.println("ACCESS DENIED");
-			}
-		} while (choice != 0);
+			System.out.println("ENTER 0 TO  HOME OR ANY NUMBER TO CONTINUE");
+			choice=s.nextInt();
+			s.nextLine();
+			if(choice==0) System.out.println("HOME");
+		}while(choice !=0);
 	}
 }
